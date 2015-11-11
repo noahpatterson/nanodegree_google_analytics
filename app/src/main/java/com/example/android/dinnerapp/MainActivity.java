@@ -84,5 +84,13 @@ public class MainActivity extends Activity
 
         return dinnerChoice;
     }
+
+    public void showAllRecipes(View view) {
+        String [] allDinners = new Dinner(this, 0).getAllDinners(this);
+
+        Intent allDinnersIntent = new Intent(this, AllRecipesActivity.class);
+        allDinnersIntent.putExtra("allDinners",allDinners);
+        startActivity(allDinnersIntent);
+    }
 }
 
