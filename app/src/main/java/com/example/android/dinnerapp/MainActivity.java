@@ -35,7 +35,8 @@ public class MainActivity extends Activity
         
         // TODO
         // Make sure that Analytics tracking has started
-        ((MyApplication) getApplication()).startTracking();
+        MyApplication myApplication = (MyApplication) getApplication();
+        myApplication.startTracking();
     }
 
     /*

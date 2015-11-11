@@ -17,7 +17,7 @@ public class MyApplication extends Application {
             GoogleAnalytics ga = GoogleAnalytics.getInstance(this);
             gaTracker = ga.newTracker(R.xml.track_app);
             ga.enableAutoActivityReports(this);
-            ga.getLogger().setLogLevel(Logger.LogLevel.VERBOSE );
+            ga.getLogger().setLogLevel(Logger.LogLevel.VERBOSE);
         }
     }
 
