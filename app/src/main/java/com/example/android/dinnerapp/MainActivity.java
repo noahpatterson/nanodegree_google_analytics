@@ -24,10 +24,21 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.PopupMenu;
 
+import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.common.api.PendingResult;
+import com.google.android.gms.common.api.Result;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.tagmanager.ContainerHolder;
+import com.google.android.gms.tagmanager.TagManager;
+
+import java.util.concurrent.TimeUnit;
+
 
 public class MainActivity extends Activity
         {
 
+            private TagManager tagManager;
+            //private ContainerHolder gtmContainerHolder;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,9 +48,29 @@ public class MainActivity extends Activity
         // Make sure that Analytics tracking has started
         MyApplication myApplication = (MyApplication) getApplication();
         myApplication.startTracking();
+        tagManager = myApplication.getTagManager();
+        loadGtmContainer();
     }
 
-    /*
+    private void loadGtmContainer() {
+
+        tagManager.setVerboseLoggingEnabled(true);
+        PendingResult pendingResult  = tagManager.loadContainerPreferFresh("GTM-5WNWZL", R.raw.gtm_5wnwzl);
+        pendingResult.setResultCallback(new ResultCallback<ContainerHolder>() {
+            @Override
+            public void onResult(ContainerHolder containerHolder) {
+                if (!containerHolder.getStatus().isSuccess()){
+                    //handle failure
+                    return;
+                }
+                containerHolder.refresh();
+                ((MyApplication) getApplication()).setGtmContainerHolder(containerHolder);
+
+            }
+        }, 2, TimeUnit.SECONDS);
+    }
+
+            /*
      * Show a pop up menu of food preferences.
      * Menu items are defined in menus/food_prefs_menu.xml
      */
@@ -96,8 +127,9 @@ public class MainActivity extends Activity
     }
 
     public void showDailySpecial(View view) {
-        Intent intent   = new Intent(this, ShowDailySpecialActivity.class);
+        Intent intent = new Intent(this, ShowDailySpecialActivity.class);
         startActivity(intent);
     }
+
 }
 

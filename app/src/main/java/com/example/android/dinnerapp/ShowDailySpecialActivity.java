@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import com.google.android.gms.tagmanager.Container;
+
 public class ShowDailySpecialActivity extends Activity {
 
     private TextView tv;
@@ -27,5 +29,12 @@ public class ShowDailySpecialActivity extends Activity {
         tv = (TextView) findViewById(R.id.textView_info);
 
         tv.setText("Pudding");
+        updateDailySpecial();
+    }
+
+    private void updateDailySpecial() {
+        Container gtmContainer = ((MyApplication) getApplication()).getGtmContainerHolder().getContainer();
+        String dailySpecial = gtmContainer.getString("daily-special");
+        tv.setText(dailySpecial);
     }
 }
