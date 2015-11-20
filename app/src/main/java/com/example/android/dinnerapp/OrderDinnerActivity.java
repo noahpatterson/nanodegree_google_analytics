@@ -19,6 +19,7 @@ package com.example.android.dinnerapp;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.android.gms.analytics.HitBuilders;
@@ -89,10 +90,80 @@ public class OrderDinnerActivity extends Activity {
                 .build());
     }
 
-    public void addDinnerToCart(View view) {
-        sendAddDintterToCartHit();
-        Utility.showMyToast("added " + selectedDinner + " to cart",this);
-        return;
+    private void sendCheckoutHit() {
+        ProductAction productAction = new ProductAction(ProductAction.ACTION_CHECKOUT);
+        gaTracker.send(new HitBuilders.EventBuilder()
+                .setCategory("shopping steps")
+                .setAction("checkout")
+                .setLabel(selectedDinner)
+                .addProduct(product)
+                .setProductAction(productAction)
+                .build());
     }
 
+    private void sendPurchaseHit() {
+        ProductAction productAction = new ProductAction(ProductAction.ACTION_PURCHASE)
+                .setTransactionId(Utility.getUniqueTransactionId(product.toString()));
+        gaTracker.send(new HitBuilders.EventBuilder()
+                .setCategory("shopping steps")
+                .setAction("purchase")
+                .setLabel(selectedDinner)
+                .addProduct(product)
+                .setProductAction(productAction)
+                .build());
+    }
+
+    public void addDinnerToCart(View view) {
+        sendAddDintterToCartHit();
+        Utility.showMyToast("added " + selectedDinner + " to cart", this);
+        View addCartButton = findViewById(R.id.addCartButton);
+        addCartButton.setVisibility(View.INVISIBLE);
+
+        View checkoutButton = findViewById(R.id.checkoutButton);
+        checkoutButton.setVisibility(View.VISIBLE);
+    }
+
+    public void orderDinnerCheckoutButton(View view) {
+        sendCheckoutHit();
+        Utility.showMyToast("sent checkout hit", this);
+
+        View checkoutButton = findViewById(R.id.checkoutButton);
+        checkoutButton.setVisibility(View.INVISIBLE);
+
+
+
+        View paymentButton = findViewById(R.id.paymentButton);
+        paymentButton.setVisibility(View.VISIBLE);
+    }
+
+    public void orderDinnerPurchaseButton(View view) {
+        sendPurchaseHit();
+        Utility.showMyToast("purchase hit", this);
+
+
+
+    }
+
+
+    public void orderDinnerPaymentButton(View view) {
+        sendPaymentHit();
+        View paymentButton = findViewById(R.id.paymentButton);
+        paymentButton.setVisibility(View.INVISIBLE);
+
+        View purchaseButton = findViewById(R.id.purchaseButton);
+        purchaseButton.setVisibility(View.VISIBLE);
+
+    }
+
+    private void sendPaymentHit() {
+        ProductAction productAction = new ProductAction(ProductAction.ACTION_CHECKOUT_OPTION)
+                .setCheckoutStep(2);
+        gaTracker.send(new HitBuilders.EventBuilder()
+                .setCategory("shopping steps")
+                .setAction("payment info")
+                .setLabel(selectedDinner)
+                .addProduct(product)
+                .setProductAction(productAction)
+                .build());
+    }
 }

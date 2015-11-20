@@ -12,6 +12,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+
 public class AllRecipesActivity extends AppCompatActivity {
 
     @Override
@@ -26,7 +29,7 @@ public class AllRecipesActivity extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String dinner =(String) parent.getItemAtPosition(position);
+                String dinner = (String) parent.getItemAtPosition(position);
                 Intent intent = new Intent(getBaseContext(), OrderDinnerActivity.class);
                 intent.putExtra("selectedDinner", dinner);
                 startActivity(intent);
@@ -34,6 +37,16 @@ public class AllRecipesActivity extends AppCompatActivity {
         });
 
         listView.setAdapter(arrayAdapter);
+        long endTime = System.nanoTime();
+        long startTime = getIntent().getLongExtra("startTime", 0);
+        long elapsedTime = (endTime - startTime) / 1000000;
+        Tracker tracker = ((MyApplication) getApplication()).getTracker();
+        tracker.send(new HitBuilders.TimingBuilder()
+            .setCategory("shopping steps")
+            .setValue(elapsedTime)
+            .setLabel("show all recipes")
+            .setVariable("duration")
+            .build());
 
     }
 }

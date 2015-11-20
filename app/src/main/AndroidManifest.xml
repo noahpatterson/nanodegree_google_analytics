@@ -65,6 +65,8 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.android.dinnerapp.MainActivity" />
         </activity>
+        <activity android:name=".ShowDailySpecialActivity" >
+        </activity>
     </application>
 
 </manifest>

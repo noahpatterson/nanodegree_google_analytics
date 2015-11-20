@@ -35,5 +35,32 @@
             android:id="@+id/addCartButton"
             style="@style/button_solid"
             android:onClick="addDinnerToCart"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Checkout"
+            android:id="@+id/checkoutButton"
+            style="@style/button_solid"
+            android:onClick="orderDinnerCheckoutButton"
+            android:visibility="invisible"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Purchase"
+            android:id="@+id/purchaseButton"
+            style="@style/button_solid"
+            android:onClick="orderDinnerPurchaseButton"
+            android:visibility="invisible"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Payment"
+            android:id="@+id/paymentButton"
+            style="@style/button_solid"
+            android:onClick="orderDinnerPaymentButton"
+            android:visibility="invisible"/>
     </LinearLayout>
 </ScrollView>

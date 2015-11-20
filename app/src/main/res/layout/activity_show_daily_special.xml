@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/white"
+    android:clickable="false"
+    android:id="@+id/scrollview_daily_special"
+    android:fillViewport="false">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="1dp"
+        android:paddingBottom="5dp"
+        android:id="@+id/linear_layout_daily_special"
+        >
+        <fragment android:name="com.example.android.dinnerapp.UseInfoBoxFragment"
+            android:id="@+id/show_info_box"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            tools:layout="@layout/show_info" />
+    </LinearLayout>
+</ScrollView>

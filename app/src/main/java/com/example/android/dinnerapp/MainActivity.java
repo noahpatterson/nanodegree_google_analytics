@@ -86,11 +86,18 @@ public class MainActivity extends Activity
     }
 
     public void showAllRecipes(View view) {
+        long startTime = System.nanoTime();
         String [] allDinners = new Dinner(this, 0).getAllDinners(this);
 
         Intent allDinnersIntent = new Intent(this, AllRecipesActivity.class);
         allDinnersIntent.putExtra("allDinners",allDinners);
+        allDinnersIntent.putExtra("startTime", startTime);
         startActivity(allDinnersIntent);
+    }
+
+    public void showDailySpecial(View view) {
+        Intent intent   = new Intent(this, ShowDailySpecialActivity.class);
+        startActivity(intent);
     }
 }
 

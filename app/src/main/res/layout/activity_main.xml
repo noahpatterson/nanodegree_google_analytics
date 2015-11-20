@@ -27,6 +27,12 @@
         android:id="@+id/show_all_dinners_button"
         android:onClick="showAllRecipes"/>
 
+    <Button style="@style/button_solid"
+        android:layout_marginTop="30dp"
+        android:text="Show Daily Special"
+        android:id="@+id/show_daily_special_button"
+        android:onClick="showDailySpecial"/>
+
 </LinearLayout>
 </ScrollView>
 
