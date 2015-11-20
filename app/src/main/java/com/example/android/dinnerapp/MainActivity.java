@@ -29,6 +29,7 @@ import com.google.android.gms.common.api.PendingResult;
 import com.google.android.gms.common.api.Result;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.tagmanager.ContainerHolder;
+import com.google.android.gms.tagmanager.DataLayer;
 import com.google.android.gms.tagmanager.TagManager;
 
 import java.util.concurrent.TimeUnit;
@@ -59,7 +60,7 @@ public class MainActivity extends Activity
         pendingResult.setResultCallback(new ResultCallback<ContainerHolder>() {
             @Override
             public void onResult(ContainerHolder containerHolder) {
-                if (!containerHolder.getStatus().isSuccess()){
+                if (!containerHolder.getStatus().isSuccess()) {
                     //handle failure
                     return;
                 }
@@ -126,9 +127,53 @@ public class MainActivity extends Activity
         startActivity(allDinnersIntent);
     }
 
-    public void showDailySpecial(View view) {
+    public void showDailySpecial() {
         Intent intent = new Intent(this, ShowDailySpecialActivity.class);
         startActivity(intent);
+    }
+
+
+
+    private void putFoodPrefInDataLayer(int item) {
+        DataLayer dataLayer = tagManager.getDataLayer();
+        switch (item) {
+            case R.id.vegan_pref:
+                dataLayer.push("special_pref", "vegan");
+                break;
+            case R.id.vegetarian_pref:
+                dataLayer.push("special_pref", "vegetarian");
+                break;
+            case R.id.fish_pref:
+                dataLayer.push("special_pref", "fish");
+                break;
+            case R.id.meat_pref:
+                dataLayer.push("special_pref", "meat");
+                break;
+            case R.id.unrestricted_pref:
+                dataLayer.push("special_pref", "unrestricted");
+            default:
+                break;
+        }
+    }
+
+    public void showFoodPrefsSpecialMenu(View view) {
+        // Utility.showMyToast("I will show you a menu", this);
+        android.widget.PopupMenu popup = new android.widget.PopupMenu(this, view);
+        MenuInflater inflater = popup.getMenuInflater();
+        inflater.inflate(R.menu.food_prefs_menu, popup.getMenu());
+
+        // Set the action of the menu
+        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+
+                putFoodPrefInDataLayer(item.getItemId());
+                showDailySpecial();
+                return true;
+            }
+        });
+        // Show the popup menu
+        popup.show();
     }
 
 }

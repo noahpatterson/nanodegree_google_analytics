@@ -31,7 +31,7 @@
         android:layout_marginTop="30dp"
         android:text="Show Daily Special"
         android:id="@+id/show_daily_special_button"
-        android:onClick="showDailySpecial"/>
+        android:onClick="showFoodPrefsSpecialMenu"/>
 
 </LinearLayout>
 </ScrollView>
