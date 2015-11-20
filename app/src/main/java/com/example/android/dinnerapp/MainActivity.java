@@ -156,6 +156,11 @@ public class MainActivity extends Activity
         }
     }
 
+    private void putSpecialPrefEventInDataLayer() {
+        DataLayer dataLayer = tagManager.getDataLayer();
+        dataLayer.pushEvent("openScreen", DataLayer.mapOf("screen-name", "Show daily special"));
+    }
+
     public void showFoodPrefsSpecialMenu(View view) {
         // Utility.showMyToast("I will show you a menu", this);
         android.widget.PopupMenu popup = new android.widget.PopupMenu(this, view);
@@ -168,6 +173,7 @@ public class MainActivity extends Activity
             public boolean onMenuItemClick(MenuItem item) {
 
                 putFoodPrefInDataLayer(item.getItemId());
+                putSpecialPrefEventInDataLayer();
                 showDailySpecial();
                 return true;
             }

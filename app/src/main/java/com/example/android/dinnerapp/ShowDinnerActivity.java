@@ -27,6 +27,8 @@ import android.widget.TextView;
 
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
+import com.google.android.gms.tagmanager.DataLayer;
+import com.google.android.gms.tagmanager.TagManager;
 
 /**
  * Created by jocelyn on 3/12/15.
@@ -70,15 +72,22 @@ public class ShowDinnerActivity extends Activity {
         // Start an intent to remove the dinner suggestion
         Intent intent = new Intent(this, RemoveMealActivity.class);
         intent.putExtra(selectedDinnerExtrasKey, mDinner);
+
+        TagManager tagManager = ((MyApplication) getApplication()).getTagManager();
+        DataLayer dataLayer = tagManager.getDataLayer();
+        
+        dataLayer.pushEvent("removeMeal", DataLayer.mapOf("screen-name", "Show remove dinner", "removed_meal", mDinner));
+
         startActivity(intent);
 
         //analytics
-        Tracker tracker = ((MyApplication) getApplication()).getTracker();
-        tracker.send(new HitBuilders.EventBuilder()
-                        .setCategory("Dinner actions")
-                        .setAction("remove meal")
-                        .setLabel(mDinner)
-                        .build());
+//        Tracker tracker = ((MyApplication) getApplication()).getTracker();
+//        tracker.send(new HitBuilders.EventBuilder()
+//                        .setCategory("Dinner actions")
+//                        .setAction("remove meal")
+//                        .setLabel(mDinner)
+//                        .build());
+
     }
 
     public void showRecipe (View view) {
